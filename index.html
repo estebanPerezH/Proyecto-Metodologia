@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Revisión de Literatura: IA y Productividad</title>
+    <title>Revisión de Literatura - Jhoan Pérez</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
@@ -15,174 +15,66 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CONTENEDOR 3D FONDO --- */
+        /* --- ESTILOS GENERALES (Intactos) --- */
         #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Detrás de todo */
-            /* Fondo más profundo y oscuro */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: radial-gradient(circle at center, #02020e 0%, #000000 100%);
         }
-
-        /* --- TIPOGRAFÍA --- */
-        .reveal {
-            font-family: 'Outfit', sans-serif;
-            color: #fff;
-        }
-
-        /* Títulos con efecto neón azul oscuro */
+        .reveal { font-family: 'Outfit', sans-serif; color: #fff; }
         .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            text-transform: none;
-            text-shadow: 0 0 10px rgba(0, 198, 255, 0.7), 0 0 20px rgba(0, 198, 255, 0.4);
+            font-family: 'Outfit', sans-serif; font-weight: 800;
+            text-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
             background: -webkit-linear-gradient(#fff, #84cdfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-
-        /* --- CAJAS DE CRISTAL (Glassmorphism Avanzado) --- */
+        
+        /* --- CAJAS Y CONTENEDORES --- */
         .highlight-box {
-            background: rgba(10, 10, 25, 0.5); /* Oscuro, casi invisible */
-            border: 1px solid rgba(0, 255, 255, 0.15); /* Borde sutil */
-            backdrop-filter: blur(8px); /* Blur para el efecto cristal */
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.6);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin: 20px 0;
+            background: rgba(10, 10, 25, 0.5); border: 1px solid rgba(0, 255, 255, 0.15);
+            backdrop-filter: blur(8px); border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.6); margin: 20px 0;
         }
-
-        .highlight-box:hover {
-            transform: scale(1.02) translateY(-3px); /* Pequeño lift */
-            border-color: rgba(0, 198, 255, 0.7);
-            background: rgba(15, 15, 30, 0.7);
-        }
-
-        /* --- TARJETAS 3D INTERACTIVAS --- */
-        .card-container {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            perspective: 1500px; /* Perspectiva profunda */
-            padding: 20px;
-        }
-
+        .card-container { display: flex; gap: 30px; justify-content: center; perspective: 1500px; padding: 20px; }
         .card {
-            flex: 1;
-            /* Degradado de luz sutil */
-            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.2));
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 25px;
-            font-size: 0.7em;
-            text-align: left;
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
-            position: relative;
+            flex: 1; background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.2));
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 25px;
+            font-size: 0.7em; text-align: left; transition: transform 0.6s;
         }
-        
-        /* Efecto de levitación/inclinación al hacer hover (Más dramático) */
-        .card:hover {
-            transform: rotateY(-5deg) rotateX(2deg) translateZ(30px);
-            border-color: #00c6ff;
-            box-shadow: -10px 10px 30px rgba(0, 198, 255, 0.3);
-        }
+        .card:hover { transform: rotateY(-5deg) rotateX(2deg) translateZ(30px); border-color: #00c6ff; }
 
-        .card i {
-            transition: transform 0.5s;
-        }
-        .card:hover i {
-            transform: translateZ(30px); /* El icono "sale" de la tarjeta */
-        }
-
-        /* --- CANVAS DEL OBJETO 3D HERO (PORTADA) --- */
-        #hero-canvas {
-            width: 300px;
-            height: 300px;
-            margin: 0 auto;
-            /* Animación para que aparezca sutilmente */
-            opacity: 0;
-            animation: fadeIn 1.5s forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- NÚMEROS Y DETALLES --- */
-        .stat-number {
-            font-family: 'Space Mono', monospace;
-            font-size: 3.5em;
-            font-weight: 700;
-            color: #00c6ff;
-            display: block;
-            line-height: 1;
-            text-shadow: 0 0 30px rgba(0, 198, 255, 1); /* Sombra más fuerte */
-        }
-
-        .stat-label {
-            font-size: 0.5em;
-            color: #bbb;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-top: 10px;
-            display: block;
-        }
-        
-        /* --- AJUSTES PARA DIAPOSITIVAS DENSAS (SOLUCIÓN AL DESBORDE) --- */
-        .stat-compact .stat-number {
-            font-size: 3em; /* Reducido de 3.5em a 3em */
-        }
-        .stat-compact .stat-label {
-            font-size: 0.45em; /* Reducido de 0.5em a 0.45em */
-            letter-spacing: 3px; /* Reducido de 4px a 3px */
-        }
-        /* Reducir el padding de la caja de estadísticas */
-        .stat-compact .highlight-box {
-            padding: 20px; /* Reducido de 30px a 20px */
-        }
-
+        /* --- DETALLES --- */
+        .stat-number { font-family: 'Space Mono', monospace; font-size: 3.5em; font-weight: 700; color: #00c6ff; display: block; line-height: 1; }
+        .stat-label { font-size: 0.5em; color: #bbb; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; display: block; }
+        .stat-compact .stat-number { font-size: 3em; }
+        .stat-compact .highlight-box { padding: 20px; }
         strong { color: #00e5ff; font-weight: 700; }
-
-        /* --- TABLA MODERNA --- */
-        table.custom-table {
-            font-size: 0.55em;
-            border-collapse: separate;
-            border-spacing: 0 15px;
-            width: 100%;
-        }
-        table.custom-table th {
-            background: rgba(0, 198, 255, 0.3);
-            color: #00e5ff;
-            padding: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border: 1px solid rgba(0, 198, 255, 0.5);
-            border-radius: 10px;
-        }
-        table.custom-table td {
-            background: rgba(0,0,0,0.4);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        table.custom-table tr:hover td {
-            background: rgba(0, 198, 255, 0.2);
-            border-color: rgba(0, 198, 255, 0.5);
-        }
         
-        .apa-ref {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.45em;
-            color: #888;
-            margin-top: 30px;
-            padding-top: 10px;
-            border-top: 1px solid #333;
+        /* --- REFERENCIAS CON ESTILO --- */
+        .ref-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Línea separadora sutil */
         }
+        .ref-item:last-child { border-bottom: none; }
+        .ref-link {
+            color: #00c6ff;
+            text-decoration: none;
+            font-size: 0.9em;
+            display: block; /* Para que baje de línea si es necesario */
+            margin-top: 5px;
+            word-break: break-all; /* CRUCIAL: Rompe links largos para que no se salgan */
+        }
+        .ref-link:hover { text-decoration: underline; color: #fff; }
+
+        /* --- TABLAS --- */
+        table.custom-table { font-size: 0.55em; border-collapse: separate; border-spacing: 0 15px; width: 100%; }
+        table.custom-table th { background: rgba(0, 198, 255, 0.3); color: #00e5ff; padding: 20px; border-radius: 10px; }
+        table.custom-table td { background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        .apa-ref { font-family: 'Space Mono', monospace; font-size: 0.45em; color: #888; margin-top: 30px; border-top: 1px solid #333; padding-top: 10px; }
+        
+        /* --- HERO 3D --- */
+        #hero-canvas { width: 250px; height: 250px; margin: 0 auto; opacity: 0; animation: fadeIn 1.5s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -194,22 +86,29 @@
             <section data-transition="zoom">
                 <div id="hero-canvas"></div>
                 
-                <h2 class="animate__animated animate__fadeInDown" style="margin-top: -20px;">Revisión de Literatura</h2>
-                <h3 class="animate__animated animate__fadeInUp animate__delay-1s">IA y Productividad Laboral</h3>
+                <h3 class="animate__animated animate__fadeInDown" style="font-size: 1.1em; line-height: 1.4; margin-top: -10px;">
+                    EA. Revisión de literatura: análisis de antecedentes y estado actual del conocimiento
+                </h3>
                 
-                <div class="highlight-box" style="width: 60%; margin: 40px auto; background: rgba(0,0,0,0.7);">
-                    <p style="font-size: 0.8em; color: #fff;">Jhoan Esteban Perez</p>
-                    <hr style="border-color: rgba(255,255,255,0.2);">
-                    <p style="font-size: 0.6em; color: #aaa;">Metodología de la investigación | 22/11/2025</p>
+                <div class="highlight-box" style="width: 90%; margin: 20px auto; background: rgba(0,0,0,0.7);">
+                    <p style="font-size: 1em; color: #00c6ff; font-weight: bold; margin-bottom: 10px;">
+                        Jhoan Esteban Pérez Herrera
+                    </p>
+                    <hr style="border-color: rgba(255,255,255,0.2); width: 50%;">
+                    <div style="font-size: 0.7em; color: #ddd; line-height: 1.6; display:flex; justify-content:space-around; flex-wrap:wrap;">
+                        <span>Metodología de la investigación</span>
+                        <span>Profesor: Ruben Alexander Guiral</span>
+                    </div>
                 </div>
             </section>
 
             <section data-transition="convex">
                 <h3><i class="fa-solid fa-bolt"></i> El Nuevo Paradigma</h3>
                 <div class="highlight-box fragment fade-up">
-                    <p style="font-size: 1.2em; line-height: 1.6;">La Inteligencia Artificial no es solo tecnología; es el nuevo motor de la economía y un factor crítico para la ventaja competitiva en tu disciplina.</p>
+                    <p style="font-size: 1.1em; line-height: 1.6;">
+                        La Inteligencia Artificial no es solo tecnología; es el nuevo motor de la economía y un factor crítico para la ventaja competitiva.
+                    </p>
                 </div>
-                
                 <div style="display: flex; justify-content: space-around; margin-top: 50px;">
                     <div class="fragment zoom-in">
                         <span class="stat-number count-up" data-target="6">0</span>
@@ -223,24 +122,21 @@
             </section>
 
             <section>
-                <section data-transition="slide-in fade-out">
+                <section>
                     <div style="position: absolute; top: 0; right: 0; opacity: 0.2; font-size: 8em; font-weight:bold; color: #00c6ff;">01</div>
                     <h4>Generative AI at Work</h4>
                     <div class="card-container">
                         <div class="card">
                             <i class="fa-solid fa-headset" style="color: #00c6ff; font-size: 3em; margin-bottom: 20px;"></i>
-                            <p><strong>Autor:</strong> Brynjolfsson, E., Li, D., & Raymond, L. R. (2023)</p>
-                            <p><strong>Filiación:</strong> Instituto Tecnológico de Massachusetts (MIT)</p>
+                            <p><strong>Autor:</strong> Brynjolfsson et al. (2023)</p>
                             <p><strong>Contexto:</strong> Call Center (5,179 agentes)</p>
-                            <p><strong>Publicación:</strong> NBER Working Paper No. w31161</p>
-                            <div class="apa-ref">Referencia: Brynjolfsson et al. (2023)</div>
+                            <div class="apa-ref">Ref: Brynjolfsson et al. (2023)</div>
                         </div>
                     </div>
                 </section>
-
-                <section data-transition="fade-in slide-out" class="stat-compact">
+                <section class="stat-compact">
                     <h4>Análisis: El "Igualador"</h4>
-                    <div style="width: 85%; margin: 0 auto;"> 
+                    <div style="width: 95%; margin: 0 auto;"> 
                         <div style="display: flex; gap: 30px; align-items: flex-start;">
                             <div style="flex: 1;" class="fragment fade-right">
                                 <div class="highlight-box">
@@ -252,9 +148,8 @@
                                     <span class="stat-label">Mejora en Novatos</span>
                                 </div>
                             </div>
-                            <div style="flex: 2; text-align: left; font-size: 0.7em; line-height: 1.6;" class="fragment fade-left">
-                                <p><strong>Análisis:</strong> El estudio tuvo como <strong>objetivo</strong> evaluar el impacto real de un asistente de IA en la productividad laboral dentro de un centro de contacto. Para lograrlo, utilizaron una <strong>metodología cuantitativa</strong> basada en datos operativos reales, comparando el rendimiento de los empleados antes y después de la adopción del sistema de IA.</p>
-                                <p>Los <strong>resultados</strong> fueron contundentes: la productividad subió un 14% en general, pero el beneficio real se concentró en los trabajadores con menor experiencia, que aumentaron su desempeño en casi un 34%. 
+                            <div style="flex: 1.5; text-align: left; font-size: 0.7em; line-height: 1.6;" class="fragment fade-left">
+                                <p>Brynjolfsson y su equipo (2023) se propusieron <strong>evaluar</strong> cómo se traduce la implementación de IA en la productividad diaria dentro de un <strong>call center</strong> real. Lo que <strong>descubrieron</strong> es fascinante: si bien la productividad general subió un 14%, la IA no benefició igual a todos. Los trabajadores más nuevos vieron disparar su rendimiento hasta un 34%. La <strong>conclusión</strong> es clara: esta tecnología actúa como un verdadero <strong>“igualador” de habilidades</strong>.</p>
                             </div>
                         </div>
                     </div>
@@ -262,157 +157,140 @@
             </section>
 
             <section>
-                <section data-transition="slide-in fade-out">
+                <section>
                     <div style="position: absolute; top: 0; right: 0; opacity: 0.2; font-size: 8em; font-weight:bold; color: #ff0055;">02</div>
                     <h4>AI & Development Speed</h4>
                     <div class="card-container">
                         <div class="card">
                             <i class="fa-solid fa-code-branch" style="color: #ff0055; font-size: 3em; margin-bottom: 20px;"></i>
-                            <p><strong>Autor:</strong> Paradis, E., Grey, K., Madison, Q., Nam, D., et al. (2024)</p>
-                            <p><strong>Filiación:</strong> Empresa tecnológica de Silicon Valley</p>
-                            <p><strong>Contexto:</strong> Ingeniería de Software (Desarrolladores)</p>
-                            <p><strong>Publicación:</strong> arXiv Preprint</p>
-                            <div class="apa-ref">Referencia: Paradis et al. (2024)</div>
+                            <p><strong>Autor:</strong> Paradis et al. (2024)</p>
+                            <p><strong>Contexto:</strong> Ingeniería de Software</p>
+                            <div class="apa-ref">Ref: Paradis et al. (2024)</div>
                         </div>
                     </div>
                 </section>
-
-                <section data-transition="fade-in slide-out">
-                    <h4>Análisis: Velocidad vs Calidad</h4>
+                <section>
+                    <h4>Velocidad vs Calidad</h4>
                     <div class="highlight-box">
                         <div style="display: flex; justify-content: center; align-items: baseline; gap: 10px;">
                             <span style="font-size: 4em; font-weight: bold; color: #ff0055;">-21%</span>
                             <span style="font-size: 1.5em;">Tiempo en Tarea</span>
                         </div>
                         <p class="fragment fade-up" style="font-size: 0.7em; margin-top: 20px; text-align: left;">
-                            El <strong>objetivo</strong> fue analizar si el uso de herramientas de IA generativa mejora la velocidad y calidad en la programación. Para ello utilizaron un <strong>ensayo controlado aleatorizado (RCT)</strong> con programadores enfrentando tareas de complejidad variable, con y sin asistencia de IA. Los <strong>resultados</strong> mostraron una mejora en la velocidad cercana al 21% en tareas complejas, pero no hubo evidencia clara de un aumento equivalente en la calidad del código.
+                            El estudio confirma que programamos más rápido, pero lanza una advertencia: <strong>La velocidad sin supervisión genera deuda técnica.</strong>
                         </p>
                         <p class="fragment fade-up" style="font-size: 0.7em; text-align: left;">
-                            <i class="fa-solid fa-triangle-exclamation" style="color: #ffcc00;"></i> La <strong>conclusión</strong> del artículo es que programar más rápido no implica necesariamente programar mejor, especialmente si no se revisan errores o se genera deuda técnica. Su mayor <strong>aporte</strong> es introducir la idea de que la IA no reemplaza la pericia del desarrollador, sino que debe integrarse con prácticas sólidas de ingeniería para evitar efectos contraproducentes.
+                            <i class="fa-solid fa-triangle-exclamation" style="color: #ffcc00;"></i> <strong>Conclusión:</strong> No hubo mejora significativa en la calidad del código. La IA no reemplaza la pericia.
                         </p>
                     </div>
                 </section>
             </section>
 
             <section>
-                <section data-transition="slide-in fade-out">
+                <section>
                     <div style="position: absolute; top: 0; right: 0; opacity: 0.2; font-size: 8em; font-weight:bold; color: #ffcc00;">03</div>
                     <h4>Enhancing Productivity</h4>
                     <div class="card-container">
                         <div class="card">
                             <i class="fa-solid fa-layer-group" style="color: #ffcc00; font-size: 3em; margin-bottom: 20px;"></i>
-                            <p><strong>Autor:</strong> Al Naqbi, H., et al. (2024)</p>
-                            <p><strong>Filiación:</strong> Universidades de Emiratos Árabes Unidos</p>
-                            <p><strong>Tipo:</strong> Revisión Sistemática (PRISMA)</p>
-                            <p><strong>Publicación:</strong> Revista Sustainability (MDPI)</p>
-                            <div class="apa-ref">Referencia: Al Naqbi et al. (2024)</div>
+                            <p><strong>Autor:</strong> Al Naqbi et al. (2024)</p>
+                            <p><strong>Tipo:</strong> Revisión Sistemática</p>
+                            <div class="apa-ref">Ref: Al Naqbi et al. (2024)</div>
                         </div>
                     </div>
                 </section>
-
-                <section data-transition="fade-in slide-out">
-                    <h4>Análisis: La Paradoja de la Verificación</h4>
-                    <div class="highlight-box" style="font-size: 0.7em; text-align: left;">
-                        <p style="margin-bottom: 10px;">El <strong>objetivo</strong> de esta revisión sistemática fue examinar cómo la IA generativa está transformando la eficiencia laboral en las instituciones públicas y privadas. Se usó una <strong>Revisión Sistemática de Literatura</strong> (PRISMA).</p>
+                <section>
+                    <h4>La Paradoja de la Verificación</h4>
+                    <div class="highlight-box" style="text-align: left; font-size: 0.7em;">
+                        <p><i class="fa-solid fa-check-circle" style="color: #00ff88;"></i> <strong>Resultados:</strong> Eficiencia administrativa masiva en síntesis.</p>
                         <hr style="border-color: rgba(255,255,255,0.1);">
-                        <p>Los <strong>resultados</strong> confirmaron una mejora en la eficiencia administrativa, sobre todo en la síntesis de información, pero destacaron la "paradoja de la verificación": los empleados ahorran tiempo generando contenido, pero gastan más revisándolo y corrigiendo sesgos. La <strong>conclusión</strong> es clara: la IA mejora la productividad solo cuando existe capacidad de supervisión crítica.</p>
+                        <p><i class="fa-solid fa-circle-exclamation" style="color: #ff5555;"></i> <strong>El Costo:</strong> Los empleados ahorran tiempo creando, pero gastan más tiempo <em>verificando</em> la veracidad.</p>
                         <div class="fragment fade-up" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin-top: 20px; border-left: 4px solid #ffcc00;">
-                            <i class="fa-solid fa-star" style="color: #ffcc00;"></i> <strong>Aporte:</strong> Enfatiza la necesidad crítica de la 'alfabetización de datos' para que las organizaciones no dependan ciegamente de la tecnología.
+                            <strong>Aporte:</strong> Sin alfabetización de datos, la productividad es una ilusión.
                         </div>
                     </div>
                 </section>
             </section>
 
             <section>
-                <section data-transition="slide-in fade-out">
+                <section>
                     <div style="position: absolute; top: 0; right: 0; opacity: 0.2; font-size: 8em; font-weight:bold; color: #00ff88;">04</div>
                     <h4>Skills & Task Changes</h4>
                     <div class="card-container">
                         <div class="card">
                             <i class="fa-solid fa-user-graduate" style="color: #00ff88; font-size: 3em; margin-bottom: 20px;"></i>
-                            <p><strong>Autor:</strong> Babashahi, L., et al. (2024)</p>
-                            <p><strong>Filiación:</strong> Universidades de Australia y Países Bajos</p>
-                            <p><strong>Enfoque:</strong> Habilidades Humanas (Reskilling)</p>
-                            <p><strong>Publicación:</strong> Revista Informatics (MDPI)</p>
-                            <div class="apa-ref">Referencia: Babashahi et al. (2024)</div>
+                            <p><strong>Autor:</strong> Babashahi et al. (2024)</p>
+                            <p><strong>Enfoque:</strong> Habilidades Humanas</p>
+                            <div class="apa-ref">Ref: Babashahi et al. (2024)</div>
                         </div>
                     </div>
                 </section>
-
-                <section data-transition="fade-in slide-out">
-                    <h4>Análisis: El Cambio de Rol</h4>
+                <section>
+                    <h4>El Cambio de Rol</h4>
                     <div style="display: flex; justify-content: center; align-items: center; gap: 30px;">
                         <div class="highlight-box fragment fade-right" style="opacity: 0.5;">
                             <h5>Antes</h5>
                             <p>Ejecución</p>
-                            <p>Manualidad</p>
                         </div>
                         <i class="fa-solid fa-arrow-right fragment fade-up" style="color: #00ff88; font-size: 2em;"></i>
                         <div class="highlight-box fragment fade-left" style="border-color: #00ff88;">
                             <h5 style="color: #00ff88;">Ahora</h5>
                             <p>Supervisión</p>
-                            <p>Validación</p>
                         </div>
                     </div>
-                    <div class="fragment fade-up" style="font-size: 0.7em; margin-top: 30px; text-align: left; line-height: 1.5;">
-                        <p>El <strong>objetivo</strong> del estudio fue identificar los cambios en competencias laborales derivados de la adopción de IA en organizaciones. Para ello se desarrolló una <strong>investigación mixta</strong>, combinando encuestas a empleados y análisis documental. Los <strong>resultados</strong> indican que la tecnología por sí sola no garantiza productividad a largo plazo; los beneficios aparecen únicamente en entornos donde se implementan estrategias de **reskilling** y rediseño de roles.</p>
-                        <p>La <strong>conclusión</strong> es que la IA no sustituye al trabajador, sino que cambia lo que significa trabajar: supervisar, validar y tomar decisiones se vuelve más importante que ejecutar tareas manuales. Su <strong>aporte</strong> al conocimiento es resaltar la dimensión humana de la productividad, obligando a las empresas a pensar en adaptación y bienestar, no solo en automatización.</p>
-                    </div>
+                    <p class="fragment fade-up" style="font-size: 0.65em; margin-top: 30px; text-align: center;">
+                        <strong>Aporte:</strong> La tecnología sola falla. Se necesita <strong>Reskilling</strong> para pasar de "hacer" a "validar".
+                    </p>
                 </section>
             </section>
 
             <section>
-                <section data-transition="slide-in fade-out">
+                <section>
                     <div style="position: absolute; top: 0; right: 0; opacity: 0.2; font-size: 8em; font-weight:bold; color: #fff;">05</div>
                     <h4>Impact on Growth</h4>
                     <div class="card-container">
                         <div class="card">
                             <i class="fa-solid fa-earth-americas" style="color: #fff; font-size: 3em; margin-bottom: 20px;"></i>
-                            <p><strong>Autor:</strong> Organización para la Cooperación y el Desarrollo Económicos (OECD) (2024)</p>
-                            <p><strong>Filiación:</strong> Organismo Internacional</p>
+                            <p><strong>Autor:</strong> OECD (2024)</p>
                             <p><strong>Tipo:</strong> Informe de Política Pública</p>
-                            <p><strong>Publicación:</strong> OECD Publishing</p>
-                            <div class="apa-ref">Referencia: OECD (2024)</div>
+                            <div class="apa-ref">Ref: OECD (2024)</div>
                         </div>
                     </div>
                 </section>
-
-                <section data-transition="fade-in slide-out">
-                    <h4>Análisis: Visión Macro</h4>
-                    <div class="highlight-box" style="font-size: 0.7em;">
-                        <p style="text-align: left; margin-bottom: 20px;">El <strong>objetivo</strong> del informe fue evaluar el impacto de la IA en la productividad y el crecimiento económico a nivel global. Para ello se aplicó una <strong>metodología de análisis macroeconómico comparado</strong> utilizando datos de múltiples países y sectores industriales.</p>
-                        <ul style="margin-top: 20px; list-style-type: none; text-align: left; font-size: 1em; line-height: 1.4;">
-                            <li class="fragment fade-up">Los <strong>resultados</strong> muestran que la IA tiene el potencial de funcionar como una Tecnología de Propósito General, capaz de impulsar el crecimiento económico sostenido, pero advierte que los beneficios podrían concentrarse en grandes empresas.</li>
-                            <li class="fragment fade-up">La <strong>conclusión</strong> central es que la productividad impulsada por IA no es automática: depende de políticas públicas que fomenten formación técnica y transparencia. El <strong>aporte</strong> fundamental es ofrecer lineamientos para democratizar los beneficios tecnológicos y evitar ampliar brechas económicas.</li>
+                <section>
+                    <h4>Visión Macro</h4>
+                    <div class="highlight-box" style="font-size: 0.7em; text-align: left;">
+                        <p>La IA como <strong>Tecnología de Propósito General</strong>.</p>
+                        <ul style="margin-top: 20px; list-style-type: none;">
+                            <li class="fragment fade-up">🚀 Potencial de crecimiento global.</li>
+                            <li class="fragment fade-up">⚖️ <strong>Riesgo:</strong> Concentración de beneficios en grandes empresas.</li>
+                            <li class="fragment fade-up">🏛️ <strong>Aporte:</strong> Urgencia de políticas de equidad y distribución.</li>
                         </ul>
                     </div>
                 </section>
             </section>
 
             <section>
-                <section data-transition="slide-in fade-out">
+                <section>
                     <div style="position: absolute; top: 0; right: 0; opacity: 0.2; font-size: 8em; font-weight:bold; color: #ff5555;">06</div>
                     <h4>AI & Well-being</h4>
                     <div class="card-container">
                         <div class="card">
                             <i class="fa-solid fa-heart-pulse" style="color: #ff5555; font-size: 3em; margin-bottom: 20px;"></i>
-                            <p><strong>Autor:</strong> Soulami, Y., et al. (2024)</p>
-                            <p><strong>Filiación:</strong> Universidades de Marruecos y España</p>
-                            <p><strong>Enfoque:</strong> Bienestar Laboral (Well-being)</p>
-                            <p><strong>Publicación:</strong> Revista Frontiers in AI</p>
-                            <div class="apa-ref">Referencia: Soulami et al. (2024)</div>
+                            <p><strong>Autor:</strong> Soulami et al. (2024)</p>
+                            <p><strong>Enfoque:</strong> Bienestar Laboral</p>
+                            <div class="apa-ref">Ref: Soulami et al. (2024)</div>
                         </div>
                     </div>
                 </section>
-
-                <section data-transition="fade-in slide-out">
-                    <h4>Análisis: Productividad vs Salud Mental</h4>
+                <section>
+                    <h4>Productividad vs Salud Mental</h4>
                     <div class="highlight-box" style="font-size: 0.7em; text-align: left;">
-                        <p>El <strong>objetivo</strong> de esta revisión bibliométrica fue analizar la relación entre productividad, automatización con IA y bienestar laboral. El enfoque <strong>metodológico</strong> consistió en un análisis de producción académica indexada durante los últimos años.</p>
-                        <hr style="border-color: rgba(255,255,255,0.2);">
-                        <p>Los <strong>resultados</strong> revelaron una tensión interesante: la IA reduce tareas repetitivas y aumenta la eficiencia, pero a la vez amplifica la sensación de vigilancia, competencia y riesgo de reemplazo. La <strong>conclusión</strong> del estudio es directa: si la implementación tecnológica incrementa el estrés, la productividad lograda a corto plazo se pierde por agotamiento y rotación.</p>
-                        <div class="fragment fade-up" style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;">
-                            <strong style="color: #00ff88;">Aporte:</strong> Integra el bienestar psicológico como variable clave de productividad, recordando que eficiencia y salud mental no son factores opuestos sino interdependientes.
+                        <p><strong>El Dilema:</strong></p>
+                        <p>Menos tareas aburridas <i class="fa-solid fa-face-smile" style="color: #00ff88;"></i></p>
+                        <p>Más sensación de vigilancia <i class="fa-solid fa-face-frown" style="color: #ff5555;"></i></p>
+                        <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;">
+                            <strong style="color: #fff;">Conclusión:</strong> Si hay "Burnout", la ganancia se pierde.
                         </div>
                     </div>
                 </section>
@@ -424,48 +302,40 @@
                     <thead>
                         <tr>
                             <th>Criterio</th>
-                            <th>Estudios Técnicos (1, 2)</th>
-                            <th>Estudios Humanos/Política (3-6)</th>
+                            <th>Estudios Técnicos</th>
+                            <th>Estudios Humanos</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="fragment fade-left">
-                            <td><strong>Hallazgo Clave</strong></td>
-                            <td><span style="color: #00ff88;">Aumento Directo en Velocidad</span><br>(14% - 21%)</td>
-                            <td>Productividad ligada a <span style="color: #ffcc00;">Cultura y Bienestar</span></td>
+                            <td><strong>Hallazgo</strong></td>
+                            <td><span style="color: #00ff88;">Aumento directo</span><br>(14% - 21%)</td>
+                            <td>Depende del<br><span style="color: #ffcc00;">Contexto y Bienestar</span></td>
                         </tr>
                         <tr class="fragment fade-left">
-                            <td><strong>Beneficiario Principal</strong></td>
-                            <td>Trabajador Junior<br>(Nivelación de Habilidades)</td>
-                            <td>Empresas con<br>Políticas de Reskilling</td>
+                            <td><strong>Beneficiario</strong></td>
+                            <td>Trabajador Junior</td>
+                            <td>Empresas con Cultura de Aprendizaje</td>
                         </tr>
                         <tr class="fragment fade-left">
-                            <td><strong>Advertencia Crítica</strong></td>
-                            <td>Calidad del Código / Deuda Técnica</td>
-                            <td>Estrés Laboral / Paradoja de Verificación</td>
+                            <td><strong>Riesgo</strong></td>
+                            <td>Calidad vs Velocidad</td>
+                            <td>Estrés y Supervisión</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
 
             <section>
-                <h3>Estado Actual del Conocimiento</h3>
+                <h3>Estado del Conocimiento</h3>
                 <div style="display: flex; gap: 20px;">
                     <div class="highlight-box fragment fade-right" style="flex:1; font-size: 0.6em; border-top: 3px solid #00ff88;">
-                        <h5 style="color: #00ff88;"><i class="fa-solid fa-check"></i> Lo que se ha Investigado</h5>
-                        <ul style="text-align: left; line-height: 1.5; margin-left: 20px;">
-                            <li>Aumento robusto de velocidad operativa (Call Centers, Software).</li>
-                            <li>El efecto "igualador" de la IA en la curva de aprendizaje.</li>
-                            <li>Transformación de roles hacia la supervisión y validación.</li>
-                        </ul>
+                        <h5 style="color: #00ff88;">Sabemos</h5>
+                        <p style="text-align: left;">Aumenta velocidad operativa y nivela a los novatos.</p>
                     </div>
                     <div class="highlight-box fragment fade-left" style="flex:1; font-size: 0.6em; border-top: 3px solid #ff5555;">
-                        <h5 style="color: #ff5555;"><i class="fa-solid fa-xmark"></i> Vacíos Persistentes</h5>
-                        <ul style="text-align: left; line-height: 1.5; margin-left: 20px;">
-                            <li>Estudios a largo plazo (>5 años) sobre el impacto acumulado.</li>
-                            <li>Métricas que evalúen *simultáneamente* Calidad y Velocidad.</li>
-                            <li>Impacto en la innovación y creatividad humana no repetitiva.</li>
-                        </ul>
+                        <h5 style="color: #ff5555;">Falta</h5>
+                        <p style="text-align: left;">Estudios a largo plazo y métricas de Calidad + Velocidad.</p>
                     </div>
                 </div>
             </section>
@@ -474,30 +344,56 @@
                 <div style="font-size: 4em; margin-bottom: 20px;">
                     <i class="fa-solid fa-lightbulb" style="color: #ffcc00; text-shadow: 0 0 50px #ffcc00;"></i>
                 </div>
-                <h3>Conclusiones Personales</h3>
-                <div class="highlight-box" style="text-align: left; font-size: 0.7em; line-height: 1.6;">
-                    <p>La productividad con IA no es un beneficio tecnológico, sino un **híbrido de tecnología y gestión humana**. Los estudios demuestran que no se trata de sustituir, sino de **redefinir el valor del criterio, la pericia y el bienestar** del empleado como factor de éxito. La eficiencia a corto plazo se pierde si la implementación tecnológica genera agotamiento o inseguridad.</p>
+                <h3>Reflexión Final</h3>
+                <div class="highlight-box" style="text-align: left; font-size: 0.8em; line-height: 1.6;">
+                    <p>La IA no sustituye al experto; <strong>eleva el estándar mínimo</strong>.</p>
+                    <p class="fragment fade-up">El futuro profesional es especializarse en lo que la máquina no tiene: <strong>Criterio Ético, Contexto y Empatía.</strong></p>
                 </div>
             </section>
 
             <section>
-                <h4>Referencias Bibliográficas (APA 7ª edición)</h4>
-                <div style="font-size: 0.45em; text-align: left; overflow-y: scroll; height: 500px; padding-right: 10px; font-family: 'Space Mono', monospace;">
-                    <p>Al Naqbi, H., et al. (2024). Enhancing Work Productivity through Generative Artificial Intelligence. <em>Sustainability</em>, 16(3), 1166. https://www.mdpi.com/2071-1050/16/3/1166</p>
-                    <p>Babashahi, L., et al. (2024). AI in the Workplace: A Systematic Review of Skill and Task Changes. <em>Informatics</em>, 11(6), 127. https://www.mdpi.com/2076-3387/14/6/127</p>
-                    <p>Brynjolfsson, E., Li, D., & Raymond, L. R. (2023). <em>Generative AI at Work</em> (NBER Working Paper No. w31161). National Bureau of Economic Research. https://www.nber.org/papers/w31161</p>
-                    <p>OECD. (2024). The impact of artificial intelligence on productivity, distribution and growth. <em>OECD Publishing</em>. https://www.oecd.org/going-digital/the-impact-of-artificial-intelligence-on-productivity-distribution-and-growth_d54e2842/8d900037-en.pdf</p>
-                    <p>Paradis, E., Grey, K., Madison, Q., Nam, D., et al. (2024). How much does AI impact development speed? An enterprise-based randomized controlled trial. <em>arXiv</em>. https://arxiv.org/abs/2410.12944</p>
-                    <p>Soulami, M., et al. (2024). Exploring how AI adoption in the workplace affects employee well-being: A bibliometric review and contextual analysis. <em>Frontiers in Artificial Intelligence</em>. https://www.frontiersin.org/articles/10.3389/frai.2024.1473872/full</p>
+                <h4>Referencias Bibliográficas</h4>
+                <div style="text-align: left; font-size: 0.45em; height: 500px; overflow-y: auto; padding-right: 10px; font-family: 'Space Mono', monospace;">
+                    
+                    <div class="ref-item">
+                        <p style="margin-bottom: 5px;">Al Naqbi, H., et al. (2024). Enhancing Work Productivity through Generative Artificial Intelligence. <em>Sustainability</em>, 16(3), 1166.</p>
+                        <a href="https://www.mdpi.com/2071-1050/16/3/1166" target="_blank" class="ref-link">https://www.mdpi.com/2071-1050/16/3/1166</a>
+                    </div>
+
+                    <div class="ref-item">
+                        <p style="margin-bottom: 5px;">Babashahi, L., et al. (2024). AI in the Workplace: A Systematic Review of Skill and Task Changes. <em>Informatics</em>, 11(6), 127.</p>
+                        <a href="https://www.mdpi.com/2076-3387/14/6/127" target="_blank" class="ref-link">https://www.mdpi.com/2076-3387/14/6/127</a>
+                    </div>
+
+                    <div class="ref-item">
+                        <p style="margin-bottom: 5px;">Brynjolfsson, E., Li, D., & Raymond, L. R. (2023). <em>Generative AI at Work</em> (NBER Working Paper No. w31161). National Bureau of Economic Research.</p>
+                        <a href="https://www.nber.org/papers/w31161" target="_blank" class="ref-link">https://www.nber.org/papers/w31161</a>
+                    </div>
+
+                    <div class="ref-item">
+                        <p style="margin-bottom: 5px;">OECD. (2024). <em>The impact of artificial intelligence on productivity, distribution and growth</em>. OECD Publishing.</p>
+                        <a href="https://www.oecd.org/going-digital/the-impact-of-artificial-intelligence-on-productivity-distribution-and-growth_d54e2842/8d900037-en.pdf" target="_blank" class="ref-link">https://www.oecd.org.../8d900037-en.pdf</a>
+                    </div>
+
+                    <div class="ref-item">
+                        <p style="margin-bottom: 5px;">Paradis, E., Grey, K., Madison, Q., Nam, D., et al. (2024). How much does AI impact development speed? An enterprise-based randomized controlled trial. <em>arXiv</em>.</p>
+                        <a href="https://arxiv.org/abs/2410.12944" target="_blank" class="ref-link">https://arxiv.org/abs/2410.12944</a>
+                    </div>
+
+                    <div class="ref-item">
+                        <p style="margin-bottom: 5px;">Soulami, M., et al. (2024). Exploring how AI adoption in the workplace affects employee well-being: A bibliometric review and contextual analysis. <em>Frontiers in Artificial Intelligence</em>.</p>
+                        <a href="https://www.frontiersin.org/articles/10.3389/frai.2024.1473872/full" target="_blank" class="ref-link">https://www.frontiersin.org.../frai.2024.1473872/full</a>
+                    </div>
+
                 </div>
             </section>
 
             <section>
                 <h2>Video Explicativo</h2>
                 <div class="highlight-box">
-                    <i class="fa-brands fa-youtube fa-beat" style="font-size: 4em; color: #ff0000; margin-bottom: 20px;"></i>
-                    <p style="font-size: 0.8em;">Video de [6 - 8 minutos] con la narración de toda la presentación.</p>
-                    <a href="[ENLACE DEL VIDEO AQUÍ]" target="_blank" style="color: #00c6ff; font-weight: bold; font-size: 1.2em;">VER VIDEO (Clic aquí)</a>
+                    <i class="fa-brands fa-youtube" style="font-size: 4em; color: #ff0000; margin-bottom: 20px;"></i>
+                    <p>Ver presentación completa:</p>
+                    <a href="#" style="color: #00c6ff; font-weight: bold;">[ENLACE DEL VIDEO AQUÍ]</a>
                 </div>
                 <p style="font-size: 0.6em; margin-top: 20px;">*Recuerda subir el video a YouTube (oculto) o plataforma similar*</p>
             </section>
@@ -509,406 +405,89 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
     <script>
-        // Inicializar Reveal.js
+        // CONFIGURACIÓN DE ADAPTABILIDAD
         Reveal.initialize({
             controls: true,
             progress: true,
             center: true,
             hash: false,
-            history: false,
             transition: 'convex', 
             backgroundTransition: 'slide',
-            autoAnimate: true
+            autoAnimate: true,
+            
+            // ESTOS VALORES HACEN LA MAGIA DE LA RESPONSIVIDAD
+            width: 1280,  // Ancho base
+            height: 720,  // Alto base
+            margin: 0.04, // Margen seguro para que no toque los bordes
+            minScale: 0.2, // Puede encogerse mucho para celulares
+            maxScale: 2.0 // Puede agrandarse para pantallas gigantes
         });
 
-        // Script para animar los números (Contadores)
+        // Contadores
         Reveal.on('slidechanged', event => {
-            const currentSlide = event.currentSlide;
-            const counters = currentSlide.querySelectorAll('.count-up');
-            
+            const counters = event.currentSlide.querySelectorAll('.count-up');
             counters.forEach(counter => {
                 const target = +counter.getAttribute('data-target');
-                const speed = 200; 
-
-                const updateCount = () => {
-                    const count = +counter.innerText;
-                    const inc = target / speed * 10;
-
-                    if (count < target) {
-                        counter.innerText = Math.ceil(count + inc);
-                        setTimeout(updateCount, 30);
-                    } else {
-                        counter.innerText = target;
-                    }
+                let count = 0;
+                const update = () => {
+                    if(count < target) { count++; counter.innerText = count; requestAnimationFrame(update); }
+                    else { counter.innerText = target; }
                 };
-                updateCount();
+                update();
             });
         });
 
-        // --------------------------------------------------------
-        // INNOVACIÓN 3D: Three.js Background (Red Neuronal Activa)
-        // --------------------------------------------------------
-        let camera, scene, renderer, points, lines;
-        let mouseX = 0, mouseY = 0;
-        let windowHalfX = window.innerWidth / 2;
-        let windowHalfY = window.innerHeight / 2;
-        const particlesCount = 800; 
-        let particleVelocities = []; 
-        let ambientLight;
-        const raycaster = new THREE.Raycaster();
-        const pointer = new THREE.Vector2();
-        let closestParticleIndex = -1;
-        const baseSize = 2.5; 
-
-        function getRandomVibrantColor() {
-            const hue = Math.random(); 
-            return new THREE.Color().setHSL(hue, 1.0, 0.6); 
-        }
-
-        function init3DBackground() {
-            const container = document.getElementById('canvas-container');
-            scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x000000, 0.001);
-
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000);
-            camera.position.z = 1000;
-
-            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        // Fondo 3D (Igual que el original)
+        const container = document.getElementById('canvas-container');
+        if(container) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 1000);
+            const renderer = new THREE.WebGLRenderer({alpha: true});
             renderer.setSize(window.innerWidth, window.innerHeight);
             container.appendChild(renderer.domElement);
             
-            ambientLight = new THREE.AmbientLight(0x444444, 1.5); 
-            scene.add(ambientLight);
-
             const geometry = new THREE.BufferGeometry();
-            const positions = [];
-            
-            for (let i = 0; i < particlesCount; i++) {
-                const x = Math.random() * 2000 - 1000;
-                const y = Math.random() * 2000 - 1000;
-                const z = Math.random() * 2000 - 1000;
-                positions.push(x, y, z);
-
-                particleVelocities.push(
-                    (Math.random() - 0.5) * 0.5,
-                    (Math.random() - 0.5) * 0.5,
-                    (Math.random() - 0.5) * 0.5
-                );
+            const vertices = [];
+            for(let i=0; i<1000; i++) {
+                vertices.push((Math.random()-0.5)*2000, (Math.random()-0.5)*2000, (Math.random()-0.5)*2000);
             }
-            
-            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-            
-            const colors = new Float32Array(particlesCount * 3);
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            
-            const material = new THREE.PointsMaterial({ 
-                color: 0x00c6ff, 
-                size: baseSize,
-                vertexColors: true 
-            });
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+            const material = new THREE.PointsMaterial({color: 0x00c6ff, size: 2});
+            const stars = new THREE.Points(geometry, material);
+            scene.add(stars);
+            camera.position.z = 500;
 
-            points = new THREE.Points(geometry, material);
-            scene.add(points);
-
-            const lineGeometry = new THREE.BufferGeometry();
-            const maxConnections = 5 * particlesCount; 
-            const linePositions = new Float32Array(maxConnections * 2 * 3); 
-            lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-            
-            const lineColors = new Float32Array(maxConnections * 2 * 3); 
-            lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-
-            const lineMaterial = new THREE.LineBasicMaterial({
-                color: 0x00c6ff,
-                transparent: true,
-                opacity: 1, 
-                linewidth: 1,
-                vertexColors: true
-            });
-            
-            lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-            scene.add(lines);
-
-            document.addEventListener('mousemove', onDocumentMouseMove, false);
-            window.addEventListener('resize', onWindowResize, false);
-            
-            setInitialColors();
-            
-            animateBackground();
+            function animate() {
+                requestAnimationFrame(animate);
+                stars.rotation.y += 0.0003;
+                renderer.render(scene, camera);
+            }
+            animate();
         }
         
-        function setInitialColors() {
-            const colors = points.geometry.attributes.color.array;
-            const initialColor = new THREE.Color(0x00c6ff); 
+        // Hero 3D Portada
+        const heroDiv = document.getElementById('hero-canvas');
+        if(heroDiv) {
+            const hScene = new THREE.Scene();
+            const hCamera = new THREE.PerspectiveCamera(50, 250/250, 0.1, 1000);
+            const hRenderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
+            hRenderer.setSize(250, 250);
+            heroDiv.appendChild(hRenderer.domElement);
             
-            for (let i = 0; i < particlesCount; i++) {
-                initialColor.toArray(colors, i * 3);
+            const geo = new THREE.DodecahedronGeometry(10);
+            const mat = new THREE.MeshBasicMaterial({color: 0x00c6ff, wireframe: true});
+            const mesh = new THREE.Mesh(geo, mat);
+            hScene.add(mesh);
+            hCamera.position.z = 30;
+            
+            function hAnimate() {
+                requestAnimationFrame(hAnimate);
+                mesh.rotation.x += 0.01;
+                mesh.rotation.y += 0.01;
+                hRenderer.render(hScene, hCamera);
             }
-            
-            points.geometry.attributes.color.needsUpdate = true;
+            hAnimate();
         }
-
-        function onDocumentMouseMove(event) {
-            mouseX = (event.clientX - windowHalfX) * 0.1;
-            mouseY = (event.clientY - windowHalfY) * 0.1;
-            
-            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-            pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
-            
-            findClosestParticle();
-        }
-
-        function findClosestParticle() {
-            let minDistance = Infinity;
-            closestParticleIndex = -1;
-            const positions = points.geometry.attributes.position.array;
-            const vector = new THREE.Vector3();
-
-            raycaster.setFromCamera(pointer, camera);
-
-            for (let i = 0; i < particlesCount; i++) {
-                vector.set(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
-                vector.project(camera); 
-
-                const screenDist = vector.distanceTo(new THREE.Vector3(pointer.x, pointer.y, 0));
-                
-                if (screenDist < 0.05 && screenDist < minDistance) { 
-                    minDistance = screenDist;
-                    closestParticleIndex = i;
-                }
-            }
-        }
-
-        function onWindowResize() {
-            windowHalfX = window.innerWidth / 2;
-            windowHalfY = window.innerHeight / 2;
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-        
-        function updateParticles() {
-            const positions = points.geometry.attributes.position.array;
-            const colors = points.geometry.attributes.color.array;
-            const defaultColor = new THREE.Color(0x00c6ff);
-            const activeColor = new THREE.Color(0xffffff); 
-            const expansionFactor = 0.5; 
-
-            for (let i = 0; i < particlesCount; i++) {
-                positions[i * 3] += particleVelocities[i * 3];
-                positions[i * 3 + 1] += particleVelocities[i * 3 + 1];
-                positions[i * 3 + 2] += particleVelocities[i * 3 + 2];
-
-                if (positions[i * 3] > 1000) positions[i * 3] = -1000;
-                if (positions[i * 3] < -1000) positions[i * 3] = 1000;
-                if (positions[i * 3 + 1] > 1000) positions[i * 3 + 1] = -1000;
-                if (positions[i * 3 + 1] < -1000) positions[i * 3 + 1] = 1000;
-                if (positions[i * 3 + 2] > 1000) positions[i * 3 + 2] = -1000;
-                if (positions[i * 3 + 2] < -1000) positions[i * 3 + 2] = 1000;
-                
-                if (i === closestParticleIndex) {
-                    activeColor.toArray(colors, i * 3);
-                    points.material.size = baseSize * (1 + expansionFactor); 
-                    
-                } else {
-                    const r = colors[i * 3];
-                    const g = colors[i * 3 + 1];
-                    const b = colors[i * 3 + 2];
-                    
-                    colors[i * 3] += (defaultColor.r - r) * 0.05;
-                    colors[i * 3 + 1] += (defaultColor.g - g) * 0.05;
-                    colors[i * 3 + 2] += (defaultColor.b - b) * 0.05;
-
-                    points.material.size = baseSize;
-                }
-            }
-            points.geometry.attributes.position.needsUpdate = true;
-            points.geometry.attributes.color.needsUpdate = true;
-            points.material.needsUpdate = true; 
-        }
-
-        function updateLines() {
-            const threshold = 120; 
-            const positions = points.geometry.attributes.position.array;
-            const linePositions = lines.geometry.attributes.position.array;
-            const lineColors = lines.geometry.attributes.color.array;
-            let lineIndex = 0;
-            
-            const baseLineColor = new THREE.Color(0x00c6ff); 
-            const chaoticColor = getRandomVibrantColor(); 
-            
-            for (let i = 0; i < particlesCount; i++) {
-                const x1 = positions[i * 3];
-                const y1 = positions[i * 3 + 1];
-                const z1 = positions[i * 3 + 2];
-                
-                const isClosest = (i === closestParticleIndex);
-
-                for (let j = i + 1; j < particlesCount; j++) {
-                    const x2 = positions[j * 3];
-                    const y2 = positions[j * 3 + 1];
-                    const z2 = positions[j * 3 + 2];
-                    
-                    const dx = x1 - x2;
-                    const dy = y1 - y2;
-                    const dz = z1 - z2;
-                    
-                    const distSq = dx * dx + dy * dy + dz * dz;
-
-                    if (distSq < threshold * threshold) {
-                        const dist = Math.sqrt(distSq);
-                        const opacity = 1 - (dist / threshold); 
-
-                        const isNeighborActive = (isClosest || j === closestParticleIndex);
-                        
-                        let colorToUse;
-                        if (isNeighborActive) {
-                            colorToUse = chaoticColor.clone().multiplyScalar(opacity);
-                        } else {
-                            colorToUse = baseLineColor.clone().multiplyScalar(opacity);
-                        }
-                        
-                        linePositions[lineIndex] = x1;
-                        lineColors[lineIndex++] = colorToUse.r;
-                        linePositions[lineIndex] = y1;
-                        lineColors[lineIndex++] = colorToUse.g;
-                        linePositions[lineIndex] = z1;
-                        lineColors[lineIndex++] = colorToUse.b;
-                        
-                        linePositions[lineIndex] = x2;
-                        lineColors[lineIndex++] = colorToUse.r;
-                        linePositions[lineIndex] = y2;
-                        lineColors[lineIndex++] = colorToUse.g;
-                        linePositions[lineIndex] = z2;
-                        lineColors[lineIndex++] = colorToUse.b;
-                    }
-                }
-            }
-            
-            for (let i = lineIndex; i < linePositions.length; i++) {
-                linePositions[i] = 0;
-                lineColors[i] = 0; 
-            }
-
-            lines.geometry.attributes.position.needsUpdate = true;
-            lines.geometry.attributes.color.needsUpdate = true;
-            lines.geometry.setDrawRange(0, lineIndex / 3);
-        }
-
-        function animateBackground() {
-            requestAnimationFrame(animateBackground);
-
-            camera.position.x += (mouseX * 0.05 - camera.position.x) * 0.03;
-            camera.position.y += (-mouseY * 0.05 - camera.position.y) * 0.03;
-            camera.lookAt(scene.position);
-
-            updateParticles();
-            
-            points.rotation.x += 0.0003;
-            points.rotation.y += 0.0005;
-            lines.rotation.x += 0.0003;
-            lines.rotation.y += 0.0005;
-            
-            updateLines();
-            
-            const pulse = 1.2 + Math.sin(Date.now() * 0.001) * 0.3;
-            if(ambientLight) ambientLight.intensity = pulse;
-
-            renderer.render(scene, camera);
-        }
-        
-        init3DBackground();
-
-
-        // --------------------------------------------------------
-        // INNOVACIÓN 3D: Hero Object (Objeto Central en Portada)
-        // --------------------------------------------------------
-        let heroSphere;
-        let heroGroup;
-        let heroRenderer;
-        let dodecahedronMesh;
-        let heroMouseX = 0;
-        let heroMouseY = 0;
-
-        function initHero3D() {
-            const container = document.getElementById('hero-canvas');
-            if(!container) return;
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(50, 300 / 300, 0.1, 1000);
-            heroRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            heroRenderer.setSize(300, 300);
-            container.appendChild(heroRenderer.domElement);
-            
-            heroGroup = new THREE.Group();
-            scene.add(heroGroup);
-
-            const geometry = new THREE.DodecahedronGeometry(10, 1);
-            
-            const wireframeMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0x00e5ff, 
-                wireframe: true,
-                transparent: true,
-                opacity: 0.8
-            });
-            
-            dodecahedronMesh = new THREE.Mesh(geometry, wireframeMaterial);
-            heroGroup.add(dodecahedronMesh);
-
-            const innerGeo = new THREE.SphereGeometry(6, 32, 32);
-            const innerMat = new THREE.MeshBasicMaterial({ 
-                color: 0x0072ff,
-                transparent: true,
-                opacity: 0.7
-            });
-            heroSphere = new THREE.Mesh(innerGeo, innerMat);
-            heroGroup.add(heroSphere);
-
-            const ambientLight = new THREE.AmbientLight(0x404040, 5); 
-            scene.add(ambientLight);
-            
-            const pointLight = new THREE.PointLight(0x00c6ff, 1, 100);
-            pointLight.position.set(0, 0, 30);
-            scene.add(pointLight);
-
-            camera.position.z = 35;
-            
-            container.addEventListener('mousemove', (event) => {
-                const rect = container.getBoundingClientRect();
-                heroMouseX = (event.clientX - rect.left - rect.width / 2) / rect.width;
-                heroMouseY = (event.clientY - rect.top - rect.height / 2) / rect.height;
-            });
-
-
-            function animateHero() {
-                requestAnimationFrame(animateHero);
-                
-                dodecahedronMesh.rotation.x += 0.005;
-                dodecahedronMesh.rotation.y += 0.005;
-                
-                const targetRotationX = heroMouseY * 0.5;
-                const targetRotationY = heroMouseX * 0.5;
-                heroGroup.rotation.x += (targetRotationX - heroGroup.rotation.x) * 0.05;
-                heroGroup.rotation.y += (targetRotationY - heroGroup.rotation.y) * 0.05;
-
-                const distanceToCenter = Math.sqrt(heroMouseX * heroMouseX + heroMouseY * heroMouseY);
-                const pulseIntensity = 0.5 + (1 - distanceToCenter) * 0.5; 
-                
-                const timePulse = Math.sin(Date.now() * 0.002) * 0.1;
-                const finalScale = 1 + timePulse * pulseIntensity;
-                heroSphere.scale.set(finalScale, finalScale, finalScale);
-                heroSphere.material.opacity = 0.5 + finalScale * 0.2;
-                
-                const hue = 0.5 + Math.sin(Date.now() * 0.0005) * 0.5; 
-                dodecahedronMesh.material.color.setHSL(hue, 1.0, 0.7); 
-
-                heroRenderer.render(scene, camera);
-            }
-            animateHero();
-        }
-        
-        setTimeout(initHero3D, 100);
-
     </script>
 </body>
 </html>
